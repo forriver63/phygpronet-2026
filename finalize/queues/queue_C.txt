@@ -1,0 +1,12 @@
+# Ablation extension queue — C card (seed 46)
+# Format: name epochs mech_w warmup hcp sw_w sp_w ptk seed
+exp2_wu3_ep10 10 0.2 3 1.0 0 0 12 46
+exp2_wu5_ep15 15 0.2 5 1.0 0 0 12 46
+exp3_hc30 5 0.2 0 0.3 0 0 12 46
+exp3_hc40 5 0.2 0 0.4 0 0 12 46
+exp4_sw20sp05 5 0.0 0 1.0 0.20 0.05 12 46
+exp4_sw20sp10 5 0.0 0 1.0 0.20 0.10 12 46
+exp6_topk6 5 0.2 0 1.0 0 0 6 46
+exp6_topk8 5 0.2 0 1.0 0 0 8 46
+exp6_topk16 5 0.2 0 1.0 0 0 16 46
+exp6_topk24 5 0.2 0 1.0 0 0 24 46

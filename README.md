@@ -119,3 +119,13 @@ done
 ## License / contact
 
 Private repo for paper draft. Contact: tao.zhou@keyreply.com / forriver63 / t47302088@gmail.com.
+
+## 在新机器上继续工作（无需原 Mac / 无需 Claude）
+
+参见 [`finalize/README.md`](finalize/README.md)。一句话：
+
+```bash
+git clone https://github.com/forriver63/phygpronet-2026.git
+cd phygpronet-2026
+bash finalize/run_anywhere.sh   # 自动拉数据 + 算 mean±std + push
+```
