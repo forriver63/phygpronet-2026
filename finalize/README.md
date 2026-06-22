@@ -86,3 +86,20 @@ scp finalize/queues/queue_B.txt autodl-b:/root/autodl-tmp/queue_B.txt
 | `git push` 失败 | `gh auth login`（用 forriver63 账号），或 `git remote set-url origin git@github.com:forriver63/phygpronet-2026.git` 用 SSH key |
 | `python3 not found` | 装 Python 3.8+ |
 | 训练报 numpy/torch 错误 | 在卡上：`pip install 'numpy>=2.0,<2.3'`（适配 torch 2.8 + scipy 1.17） |
+
+
+## 扩展：fewshot 6-seed 补全
+
+当前 fewshot 用 3 个 base ckpts (winner top-3)。如果想覆盖全 6 个 base seeds (与 baseline 对齐)，使用这个 queue：
+
+```bash
+# 在某张 AutoDL 卡上启动（每卡可并行不同 queue 分片）
+scp finalize/fewshot_runner.sh autodl-X:/root/autodl-tmp/
+scp finalize/queues/queue_fewshot.txt autodl-X:/root/autodl-tmp/
+ssh autodl-X "chmod +x /root/autodl-tmp/fewshot_runner.sh && \
+  nohup /root/autodl-tmp/fewshot_runner.sh /root/autodl-tmp/queue_fewshot.txt > /tmp/fs.out 2>&1 & disown"
+```
+
+完成后再 `bash finalize/run_anywhere.sh` 拉数据 + 算 mean±std + push.
+
+Queue 文件 `queues/queue_fewshot.txt` 含 81 个新 runs（3 datasets × 3 new base seeds × 3 k × 3 fs_seeds）。每个 ~5 min, 3 卡并行 ~2-3h。

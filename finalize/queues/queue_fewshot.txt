@@ -1,0 +1,91 @@
+# Few-shot extension queue: cover all 6 base seeds (was top-3 only)
+# Format: <target> <base_seed> <k> <fs_seed>
+# Targets: shhs / mass / isruc
+# Adds missing 3 base seeds (42, 45, 47) to the existing 3 (44, 46, 43).
+# Total: 3 new bases × 3 k × 3 fs_seeds × 3 targets = 81 new runs.
+#
+# Notes:
+#   - MASS requires pre-processed compact data at /root/autodl-tmp/data/mass_npz_small
+#     (run finalize/preprocess_mass.py first if not present)
+#   - ISRUC data needs to exist on the target card
+shhs 42 1 42
+shhs 42 1 43
+shhs 42 1 44
+shhs 42 5 42
+shhs 42 5 43
+shhs 42 5 44
+shhs 42 10 42
+shhs 42 10 43
+shhs 42 10 44
+shhs 45 1 42
+shhs 45 1 43
+shhs 45 1 44
+shhs 45 5 42
+shhs 45 5 43
+shhs 45 5 44
+shhs 45 10 42
+shhs 45 10 43
+shhs 45 10 44
+shhs 47 1 42
+shhs 47 1 43
+shhs 47 1 44
+shhs 47 5 42
+shhs 47 5 43
+shhs 47 5 44
+shhs 47 10 42
+shhs 47 10 43
+shhs 47 10 44
+mass 42 1 42
+mass 42 1 43
+mass 42 1 44
+mass 42 5 42
+mass 42 5 43
+mass 42 5 44
+mass 42 10 42
+mass 42 10 43
+mass 42 10 44
+mass 45 1 42
+mass 45 1 43
+mass 45 1 44
+mass 45 5 42
+mass 45 5 43
+mass 45 5 44
+mass 45 10 42
+mass 45 10 43
+mass 45 10 44
+mass 47 1 42
+mass 47 1 43
+mass 47 1 44
+mass 47 5 42
+mass 47 5 43
+mass 47 5 44
+mass 47 10 42
+mass 47 10 43
+mass 47 10 44
+isruc 42 1 42
+isruc 42 1 43
+isruc 42 1 44
+isruc 42 5 42
+isruc 42 5 43
+isruc 42 5 44
+isruc 42 10 42
+isruc 42 10 43
+isruc 42 10 44
+isruc 45 1 42
+isruc 45 1 43
+isruc 45 1 44
+isruc 45 5 42
+isruc 45 5 43
+isruc 45 5 44
+isruc 45 10 42
+isruc 45 10 43
+isruc 45 10 44
+isruc 47 1 42
+isruc 47 1 43
+isruc 47 1 44
+isruc 47 5 42
+isruc 47 5 43
+isruc 47 5 44
+isruc 47 10 42
+isruc 47 10 43
+isruc 47 10 44

@@ -72,24 +72,24 @@ This repo contains all experimental data, scripts, and figures for the 2026 resu
 
 ```bash
 python scripts/train_phyg_v2.py \
-  --seed {42|43|44|45|46} --epochs 5 --K1 96 --tau 3.5 \
+  --seed {42|43|44|45|46|47} --epochs 5 --K1 96 --tau 3.5 \
   --mech_w 0.2 --mech_high_conf_pct 0.2 \
   --pg_topk 12 --use_pg --num_workers 4 \
   --packed_dir /path/to/sleepedf_memmap_v2_mech \
   --out_dir runs/exp3_hc20_seed${SEED}
 ```
 
-5 seeds (42-46) on Sleep-EDF-78 with subject 80/10/10 random split.
+6 seeds (42-47) on Sleep-EDF-78 with subject 80/10/10 random split.
 
 ## Key results
 
 | Metric | PhyG winner | Best baseline |
 |---|---|---|
-| Sleep-EDF in-domain macro-F1 | 0.713 ± 0.036 | AttnSleep 0.726 / DeepSleep 0.717 |
-| **SHHS zero-shot macro-F1** | **0.529 ± 0.048** | CBraMod 0.490 / LaBraM 0.515 |
-| **N3 zero-shot F1** | **0.499** (best) | DeepSleep 0.480 |
-| MASS zero-shot macro-F1 | 0.604 ± 0.009 | (baselines: incompatible pipeline) |
-| ISRUC zero-shot macro-F1 | 0.344 ± 0.018 | (baselines: incompatible pipeline) |
+| Sleep-EDF in-domain macro-F1 | 0.712 ± 0.032 | AttnSleep 0.726 / DeepSleep 0.717 |
+| **SHHS zero-shot macro-F1** | **0.538 ± 0.049** | CBraMod 0.490 / LaBraM 0.515 |
+| **N3 zero-shot F1** | **0.531** (best) | DeepSleep 0.480 |
+| MASS zero-shot macro-F1 | 0.604 ± 0.008 | (baselines: incompatible pipeline) |
+| ISRUC zero-shot macro-F1 | 0.344 ± 0.018 (n=5; s47 pending) | (baselines: incompatible pipeline) |
 | **Params** | **0.66M** (1/40 of DeepSleep) | DeepSleep 25.4M / CBraMod 7.96M |
 
 ### Few-shot adaptation (PhyG winner)
@@ -139,6 +139,23 @@ for bs in 44 46 43; do
   done
 done
 ```
+
+
+
+### Optional: extend fewshot to all 6 base seeds
+
+The current fewshot has 3 base ckpts (44/46/43) × 3 k × 3 fs_seeds = 27 runs/dataset.
+To extend to all 6 base seeds (adds 42/45/47 = 27 new runs/dataset):
+
+```bash
+# On any AutoDL card (after PhyG winner seeds 42-47 trained):
+scp finalize/fewshot_runner.sh autodl-X:/root/autodl-tmp/
+scp finalize/queues/queue_fewshot.txt autodl-X:/root/autodl-tmp/
+ssh autodl-X "chmod +x /root/autodl-tmp/fewshot_runner.sh && \
+  nohup /root/autodl-tmp/fewshot_runner.sh /root/autodl-tmp/queue_fewshot.txt > /tmp/fs.out 2>&1 & disown"
+```
+
+Then re-run `bash finalize/run_anywhere.sh` to aggregate.
 
 ## License
 
