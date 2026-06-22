@@ -1,0 +1,10 @@
+# D: SHHS for s47
+shhs 47 1 42
+shhs 47 1 43
+shhs 47 1 44
+shhs 47 5 42
+shhs 47 5 43
+shhs 47 5 44
+shhs 47 10 42
+shhs 47 10 43
+shhs 47 10 44

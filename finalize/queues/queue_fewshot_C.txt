@@ -1,0 +1,10 @@
+# C: SHHS for s45
+shhs 45 1 42
+shhs 45 1 43
+shhs 45 1 44
+shhs 45 5 42
+shhs 45 5 43
+shhs 45 5 44
+shhs 45 10 42
+shhs 45 10 43
+shhs 45 10 44
