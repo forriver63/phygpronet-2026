@@ -142,7 +142,7 @@ done
 
 ## License / contact
 
-Private repo for paper draft. Contact: tao.zhou@keyreply.com / forriver63 / t47302088@gmail.com.
+Private repo for paper draft. Contact: forriver63 / t47302088@gmail.com.
 
 ## 在新机器上继续工作（无需原 Mac / 无需 Claude）
 
