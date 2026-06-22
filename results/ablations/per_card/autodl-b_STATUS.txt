@@ -1,0 +1,8 @@
+[Mon Jun 22 14:04:32 CST 2026] host=autodl-container-b0bf4cb35f-44866196
+Queue: /root/autodl-tmp/queue_B.txt
+  done: 3
+  todo: 7
+  fail: 0
+  current: exp3_hc40 s45
+
+RESULTS_MD: /root/autodl-tmp/runs/overnight/RESULTS.md

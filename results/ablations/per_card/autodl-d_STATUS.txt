@@ -1,0 +1,8 @@
+[Mon Jun 22 14:01:37 CST 2026] host=autodl-container-320f4f8aac-3cbf9748
+Queue: /root/autodl-tmp/queue_D_s47.txt
+  done: 2
+  todo: 8
+  fail: 0
+  current: exp3_hc30 s47
+
+RESULTS_MD: /root/autodl-tmp/runs/overnight/RESULTS.md
