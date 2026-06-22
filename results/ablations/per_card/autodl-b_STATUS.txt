@@ -1,8 +1,8 @@
-[Mon Jun 22 15:05:44 CST 2026] host=autodl-container-b0bf4cb35f-44866196
+[Mon Jun 22 15:36:15 CST 2026] host=autodl-container-b0bf4cb35f-44866196
 Queue: /root/autodl-tmp/queue_B.txt
-  done: 5
-  todo: 5
+  done: 6
+  todo: 4
   fail: 0
-  current: exp4_sw20sp10 s45
+  current: exp6_topk6 s45
 
 RESULTS_MD: /root/autodl-tmp/runs/overnight/RESULTS.md
