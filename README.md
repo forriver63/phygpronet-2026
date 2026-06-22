@@ -9,8 +9,9 @@ This repo contains all experimental data, scripts, and figures for the 2026 resu
 ```
 .
 ├── docs/
-│   ├── PhyGProNet_Supervisor_Report.docx     # Paper-style narrative report (for supervisor)
-│   └── PhyGProNet_Final_Report.docx          # Detailed per-seed × per-class report
+│   ├── PhyGProNet_Supervisor_Report.docx     # Paper-style narrative (主报告，给老师看)
+│   ├── PhyGProNet_Final_Report.docx          # Detailed per-seed × per-class report
+│   └── PhyGProNet_Experiments_Report.docx    # First-pass experiments report
 ├── results/
 │   ├── final_results.json                    # Aggregated JSON (all baselines + PhyG winner + fewshot)
 │   ├── baselines/                            # Per-seed JSON × 6 baselines × 6 seeds
@@ -22,24 +23,47 @@ This repo contains all experimental data, scripts, and figures for the 2026 resu
 │   │   ├── shhs/   (27 runs: 3 base ckpts × k∈{1,5,10} × 3 fs_seeds)
 │   │   ├── mass/   (27 runs)
 │   │   └── isruc/  (27 runs)
-│   └── ablations/                            # Per-config results.json (Exp 2/3/4/6/7/12/FusionA)
+│   ├── ablations/                            # Per-config results.json (Exp 2/3/4/6/7/12/FusionA)
+│   │   ├── SUMMARY.md                        # mean ± std aggregated across all seeds
+│   │   └── per_card/                         # B/C/D card RESULTS.md snapshots
+│   └── summaries/                            # Historical hparam/ablation CSV summaries
 ├── scripts/
-│   ├── train_phyg_v2.py                      # Main training (knobs: mech_warmup, high_conf_pct, asymm weights, pg_topk)
-│   ├── train_multi_subject.py                # MultiChannelSleepNet single-channel retraining
-│   ├── eval_exp1_perckpt.py                  # Per-epoch ckpt evaluation (alignment + SHHS zs)
-│   ├── eval_shhs_perclass.py                 # Quick SHHS per-class F1
-│   ├── eval_mass_isruc.py                    # MASS / ISRUC zero-shot
-│   ├── eval_shhs_tt_zscore.py                # Exp 9: test-time z-score
-│   ├── eval_viterbi.py                       # Exp 5: Viterbi smoothing
-│   ├── eval_temp_cal.py                      # Exp 8: temperature calibration
-│   ├── finetune_shhs_fast.py                 # SHHS few-shot
-│   ├── finetune_target_fewshot.py            # MASS / ISRUC few-shot (legacy slow)
-│   └── finetune_mass_fast.py                 # MASS few-shot (uses pre-processed compact data)
-└── figs/                                     # Interpretability figures
-    ├── expA_proto_scatter.png                # Prototype-Physiology Alignment (Fig 1)
-    ├── expC_topk.png                         # Cross-domain prototype consistency (Fig 2)
-    ├── expE_pca.png, expE_adj.png            # PG-R graph structure (Fig 3a, 3b)
-    └── expD_N2.png, expD_N3.png              # Decision path visualization (Fig 4a, 4b)
+│   ├── README.md                             # Per-script documentation
+│   ├── train_phyg_v2.py                      # Main PhyG training (all ablation knobs)
+│   ├── train_multi_subject.py                # MultiChannelSleepNet retrain
+│   ├── eval_*.py                             # SHHS/MASS/ISRUC + per-class + Exp 5/8/9
+│   ├── finetune_{shhs_fast,target,mass_fast}.py  # Few-shot adaptation
+│   ├── baselines/                            # Baseline training + dispatchers
+│   │   ├── train_baseline_old.py             # AttnSleep / TinySleepNet wrapper
+│   │   ├── train_cbramod_old.py, train_usleep_old.py, train_attn_unified.py
+│   │   ├── train_phyg_unified*.py            # PhyG 5-fold + saveall + multi-band variants
+│   │   ├── analysis.py                       # paired t-test + confusion matrix
+│   │   ├── eval_proto_mech_v2.py, eval_zs_mb.py, eval_tinysleep_mass.py
+│   │   ├── attn_zs_eval.py, ensemble_cbramod.py, tinysleep_train_eval.py
+│   │   ├── build_unified_split.py, preprocess_mass.py, zs_ms*.py
+│   │   └── dispatch/                         # Historical shell dispatchers (run_*, post_fusion_queue)
+│   ├── interpretability/                     # Paper §4 figures (Exp A/C/D/E/F generators)
+│   │   ├── eval_proto_mech_v3.py             # → Fig 1 (Prototype-Physiology Alignment)
+│   │   ├── eval_proto_crossdomain.py         # → Fig 2 (Cross-domain consistency)
+│   │   ├── exp_D.py, exp_E.py, exp_F.py      # → Fig 3 (PG-R) / Fig 4 (decision path) / supplementary
+│   └── model_src/                            # Shared InceptionTime + ProtoHeadL1 + ProtoGraphRefiner
+├── figs/                                     # All interpretability figures (PNG)
+│   ├── expA_proto_scatter.png                # Fig 1 (paper canonical)
+│   ├── expC_topk.png                         # Fig 2
+│   ├── expE_pca.png, expE_adj.png            # Fig 3a/3b
+│   ├── expD_N2.png, expD_N3.png              # Fig 4a/4b
+│   ├── expA_v3_fold0_A/, expC_crossdomain_fold0/  # Source PNGs
+│   ├── expD_decision_path/                   # All 20 decision paths (W/N1/N2/N3/REM × 4 examples)
+│   └── expE_pg_graph/                        # PG-R raw outputs (pca + adjacency)
+└── finalize/                                 # Self-contained tools for any-machine workflow
+    ├── README.md                             # 在新机器上整理仓库 + 上传 GitHub 操作手册
+    ├── HOW_TO_FINALIZE.md                    # Quick-reference + 故障排查
+    ├── queue_runner.sh                       # Remote runner (deployed on each AutoDL card)
+    ├── queues/queue_{B,C,D}.txt              # Per-card ablation queue
+    ├── run_anywhere.sh                       # 一键脚本：拉数据 + 算 mean±std + push
+    ├── aggregate_local.py                    # mean ± std aggregator
+    ├── aggregate_results.py                  # Local-only variant (no SSH)
+    └── finalize_repo.sh                      # Legacy local finalize wrapper
 ```
 
 ## Final winner
