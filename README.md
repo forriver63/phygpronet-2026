@@ -140,9 +140,11 @@ for bs in 44 46 43; do
 done
 ```
 
-## License / contact
+## License
 
-Private repo for paper draft. Contact: forriver63 / t47302088@gmail.com.
+MIT License (see LICENSE). Currently private during paper review; will go public after acceptance.
+
+Contact: forriver63 / t47302088@gmail.com
 
 ## 在新机器上继续工作（无需原 Mac / 无需 Claude）
 
