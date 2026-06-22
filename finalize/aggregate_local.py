@@ -104,6 +104,40 @@ for cfg in sorted(groups):
         sn3 = f"{r.get('shhs_N3'):.4f}" if r.get('shhs_N3') is not None else '—'
         lines.append(f"| {r['seed']} | {r['host']} | {r['test_macro_f1']:.4f} | {r['test_N3']:.4f} | {sm} | {sn3} |")
 
+
+# === Fewshot summary ===
+import glob as _glob
+fs_lines = ['\n## D. Few-shot Adaptation\n']
+for ds in ['shhs', 'mass', 'isruc']:
+    dir_ = os.path.join(RESULTS_DIR, 'fewshot', ds)
+    if not os.path.isdir(dir_): continue
+    by_k = {}
+    for f in _glob.glob(os.path.join(dir_, 'base*_k*_fs*.json')):
+        try:
+            d = json.load(open(f))
+            k = d['k']; base = d.get('ckpt', '').split('seed')[-1].split('/')[0] if 'ckpt' in d else 'unknown'
+            zs = d.get('zero_shot', {}).get('macro_f1')
+            fs = d.get('few_shot', {}).get('macro_f1')
+            by_k.setdefault(k, []).append((base, zs, fs))
+        except Exception: pass
+    if by_k:
+        fs_lines.append(f'\n### {ds.upper()} fewshot\n')
+        fs_lines.append('| k | n | base seeds | zs macroF1 mean ± std | fs macroF1 mean ± std | Δ |')
+        fs_lines.append('|---|---|---|---|---|---|')
+        for k in sorted(by_k):
+            rs = by_k[k]
+            bases = sorted(set(r[0] for r in rs))
+            zs_arr = [r[1] for r in rs if r[1] is not None]
+            fs_arr = [r[2] for r in rs if r[2] is not None]
+            zs_m, zs_s = ms(zs_arr) if zs_arr else ('—', '—')
+            fs_m, fs_s = ms(fs_arr) if fs_arr else ('—', '—')
+            delta = ''
+            if zs_arr and fs_arr:
+                d = statistics.mean(fs_arr) - statistics.mean(zs_arr)
+                delta = f'{d:+.4f}'
+            fs_lines.append(f'| {k} | {len(rs)} | {",".join(bases)} | {zs_m}±{zs_s} | {fs_m}±{fs_s} | {delta} |')
+lines.extend(fs_lines)
+
 os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
 open(OUT_PATH, 'w').write('\n'.join(lines))
 print(f"wrote {OUT_PATH}")
