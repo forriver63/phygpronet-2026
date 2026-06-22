@@ -38,7 +38,7 @@ done
 [ -d $REPO/results/fewshot/mass_fs ] && rsync -a $REPO/results/fewshot/mass_fs/ $REPO/results/fewshot/mass/ && rm -rf $REPO/results/fewshot/mass_fs
 [ -d $REPO/results/fewshot/isruc_fs ] && rsync -a $REPO/results/fewshot/isruc_fs/ $REPO/results/fewshot/isruc/ && rm -rf $REPO/results/fewshot/isruc_fs
 
-python3 finalize/aggregate_local.py >> $LOG 2>&1 || true
+/root/miniconda3/bin/python finalize/aggregate_local.py >> $LOG 2>&1 || true
 git add -A
 if git diff --cached --quiet; then
   echo "[$(date)] no changes" >> $LOG
