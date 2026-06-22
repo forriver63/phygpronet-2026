@@ -1,8 +1,8 @@
-[Mon Jun 22 17:44:06 CST 2026] host=autodl-container-320f4f8aac-3cbf9748
+[Mon Jun 22 18:15:57 CST 2026] host=autodl-container-320f4f8aac-3cbf9748
 Queue: /root/autodl-tmp/queue_D_s47.txt
-  done: 9
-  todo: 1
+  done: 10
+  todo: 0
   fail: 0
-  current: exp6_topk24 s47
+  current: all done
 
 RESULTS_MD: /root/autodl-tmp/runs/overnight/RESULTS.md
