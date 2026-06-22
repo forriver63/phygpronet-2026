@@ -1,0 +1,13 @@
+# Tested on AutoDL containers (Python 3.12 + CUDA 12.8).
+# torch must be compatible with installed CUDA; pin pin to ensure numpy ABI compatibility.
+
+torch>=2.8.0
+numpy>=2.0,<2.3        # critical: scipy 1.15+ needs numpy 2.x; torch 2.8 also supports numpy 2.x
+scipy>=1.14,<1.18
+scikit-learn>=1.3
+tqdm
+matplotlib
+python-docx           # only needed for docx generation / inspection
+PyYAML                # for some baseline configs
+
+# Optional (CPU-only inference does not need cuda packages)

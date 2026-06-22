@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Large ckpts (use Git LFS if needed)
+*.pt
+*.pth
+
+# Data (mount external)
+data/
+
+# Temp / logs from local runs
+*.log
+/tmp/
+runs/
+._*
