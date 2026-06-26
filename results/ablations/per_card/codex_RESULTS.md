@@ -9,3 +9,5 @@
 ## 2026-06-27 sync
 - Synced EMA ablations for seeds 45, 46, 47 at momentum 0.99 and 0.999.
 - Synced MASS cross-domain prototype consistency output from expC_crossdomain_mass.
+## 2026-06-27 multi sync
+- Synced multi_seed45.
