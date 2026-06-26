@@ -1,0 +1,13 @@
+{
+  "K": 96,
+  "domains": {
+    "sleepedf": 87327
+  },
+  "top_k_agreement": {
+    "top5": {},
+    "top10": {},
+    "top20": {}
+  },
+  "assignment_correlation": {},
+  "spec_score_correlation": {}
+}
