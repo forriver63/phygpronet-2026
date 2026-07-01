@@ -28,6 +28,7 @@ sys.path.insert(0, "/root/autodl-tmp/code/PhyGProNet-Repro")
 
 from src.model_inception_tree_protoL1 import InceptionTreeProtoL1
 from src.data_sleepedf_packed import open_packed, SleepEDFPackedDataset
+from phygpronet.data.mass_npz import MASSNpzDataset
 from phygpronet.data.shhs_npz import SHHSNpzDataset
 from phygpronet.data.isruc_npz import ISRUCNpzDataset
 
@@ -98,6 +99,7 @@ def main():
     ap.add_argument("--split_json", required=True)
     ap.add_argument("--fold_id", type=int, default=0)
     ap.add_argument("--shhs_dir", default="/root/autodl-tmp/data/shhs_npz")
+    ap.add_argument("--mass_dir", default="/root/autodl-tmp/data/mass_npz")
     ap.add_argument("--isruc_dir", default="/root/autodl-tmp/data/isruc_npz")
     ap.add_argument("--out_dir", required=True)
     ap.add_argument("--batch_size", type=int, default=128)
@@ -143,6 +145,14 @@ def main():
         dl = DataLoader(ds, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers)
         sumA, sumAc, n, ct = collect_proto_stats(model, dl, device, K, expects_mech=False)
         results["shhs"] = {"sum_A": sumA, "sum_Ac": sumAc, "n": n, "class_total": ct}
+
+    # MASS
+    if os.path.isdir(args.mass_dir) and os.listdir(args.mass_dir):
+        print("[domain] MASS")
+        ds = MASSNpzDataset(args.mass_dir)
+        dl = DataLoader(ds, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers)
+        sumA, sumAc, n, ct = collect_proto_stats(model, dl, device, K, expects_mech=False)
+        results["mass"] = {"sum_A": sumA, "sum_Ac": sumAc, "n": n, "class_total": ct}
 
     # ISRUC
     if os.path.isdir(args.isruc_dir) and os.listdir(args.isruc_dir):
